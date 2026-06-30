@@ -6,9 +6,7 @@ Local PSA Search System for searching PSOC and PSIC workbook data.
 
 1. Double-click `run.bat`.
 2. Open `http://127.0.0.1:8000` in your browser.
-3. Log in with:
-   - Username: `admin`
-   - Password: `admin123`
+3. Log in with your account credentials.
 
 ## Features
 
