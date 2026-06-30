@@ -20,3 +20,6 @@
 2026-06-30 15:08:02	search	admin	sheet=sorted PSOC PSIC; query=accoun; matches=77
 2026-06-30 15:08:02	search	admin	sheet=sorted PSOC PSIC; query=; matches=4549
 2026-06-30 15:08:03	search	admin	sheet=sorted PSOC PSIC; query=ACCOUNTING ASSOC; matches=7
+2026-06-30 16:14:27	login_success	admin	-
+2026-06-30 16:14:28	search	admin	sheet=all; query=; matches=4549
+2026-06-30 16:15:04	search	admin	sheet=all; query=; matches=4549
