@@ -4,61 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>PSA Search System</title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta http-equiv="refresh" content="0; url=http://127.0.0.1:8000/login" />
+    <script>
+      window.location.replace('http://127.0.0.1:8000/login');
+    </script>
   </head>
   <body>
-    <header class="topbar">
-      <div class="brand">
-        <img class="brand-logo" src="logo/PSA-logo-1536x1536.webp" alt="PSA logo" />
-        <div>
-          <p class="eyebrow">Philippine Statistics Authority</p>
-          <h1>PSA Search System</h1>
-          <p class="subtitle">Search PSOC and PSIC workbook records instantly.</p>
-        </div>
-      </div>
-      <div class="status-pill" id="statusText">Loading workbook…</div>
-    </header>
-
-    <main class="workspace">
-      <section class="toolbar">
-        <label class="search-box">
-          <span>🔎</span>
-          <input id="searchInput" type="search" placeholder="Type keywords to filter records" autocomplete="off" />
-        </label>
-        <label class="sheet-picker">
-          <span>Sheet</span>
-          <select id="sheetSelect"></select>
-        </label>
-        <button id="clearButton" type="button">Clear</button>
-      </section>
-
-      <section class="summary-grid">
-        <div>
-          <strong id="fileName">Loading…</strong>
-          <span>Source file</span>
-        </div>
-        <div>
-          <strong id="resultCount">0</strong>
-          <span>Results shown</span>
-        </div>
-        <div>
-          <strong id="totalCount">0</strong>
-          <span>Total matches</span>
-        </div>
-      </section>
-
-      <section class="sheet-pills" id="sheetPills"></section>
-
-      <section class="table-shell">
-        <div class="table-scroll">
-          <table id="resultsTable">
-            <thead></thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </section>
-    </main>
-
-    <script src="app.js"></script>
+    <p>Opening the login page for the local PSA Search System…</p>
+    <p>If the login page does not open, start the local app and try again.</p>
   </body>
 </html>
