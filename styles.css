@@ -132,6 +132,65 @@ th { background: #f7f9fc; color: var(--muted); font-size: 0.9rem; }
   color: white;
 }
 
+.admin-panel {
+  max-width: 900px;
+  margin: 20px auto;
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.admin-header h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.admin-header p {
+  margin: 6px 0 18px;
+  color: #526c8a;
+}
+
+.user-form {
+  display: grid;
+  gap: 16px;
+}
+
+.user-form label {
+  display: grid;
+  gap: 8px;
+  color: #0f2446;
+}
+
+.user-form input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid #d8e0ea;
+  border-radius: 12px;
+  font: inherit;
+}
+
+.user-form button {
+  width: fit-content;
+  min-height: 48px;
+  background: #164e9f;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.admin-hint {
+  margin: 0;
+  color: #637083;
+}
+
+.success {
+  margin: 0;
+  color: #0a7e07;
+}
+
 .login-panel {
   width: min(620px, 100%);
   background: white;
