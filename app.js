@@ -74,6 +74,12 @@ function renderSheets() {
     sheetSelect.innerHTML = '<option value="all">All sheets</option>' + sheets.map((sheet) => `<option value="${escapeHtml(sheet.name)}">${escapeHtml(sheet.name)}</option>`).join('');
     sheetSelect.value = activeSheet;
   }
+
+  if (sheets.length === 0) {
+    sheetPills.innerHTML = '<div class="sheet-empty">No workbook sheets available.</div>';
+    return;
+  }
+
   sheetPills.innerHTML = ['<button type="button" data-sheet="all" class="' + (activeSheet === 'all' ? 'active' : '') + '">All sheets</button>']
     .concat(sheets.map((sheet) => `<button type="button" data-sheet="${escapeHtml(sheet.name)}" class="${activeSheet === sheet.name ? 'active' : ''}">${escapeHtml(sheet.name)} (${sheet.count})</button>`))
     .join('');
@@ -151,7 +157,16 @@ async function loadWorkbook() {
     const response = await fetch('data/psa-data.json');
     if (!response.ok) throw new Error('Unable to load workbook data.');
     workbook = await response.json();
-    fileName.textContent = workbook.file;
+    fileName.textContent = workbook.file || 'Unknown workbook';
+    if (!workbook.sheets || workbook.sheets.length === 0) {
+      statusText.textContent = 'Workbook loaded, but no sheets were found. Run the export script to refresh data.';
+      table.querySelector('tbody').innerHTML = `<tr><td class="empty">No sheets available in workbook data.</td></tr>`;
+      renderSheets();
+      resultCount.textContent = '0';
+      totalCount.textContent = '0';
+      loaded = true;
+      return;
+    }
     statusText.textContent = `Loaded ${workbook.sheets.length} sheet(s)`;
     renderSheets();
     renderResults();
@@ -171,20 +186,14 @@ loginForm.addEventListener('submit', (event) => {
   const password = document.getElementById('password').value;
   const users = loadStoredUsers();
 
-  if (username === AUTH_USERNAME && password === AUTH_PASSWORD) {
-    currentUser = username;
-    loginError.textContent = '';
-    showApp();
-    adminMenuWrapper.classList.remove('hidden');
-    if (!loaded) loadWorkbook();
-    return;
-  }
+  const isAdmin = username === AUTH_USERNAME && password === AUTH_PASSWORD;
+  const isRegularUser = users[username] && users[username] === password;
 
-  if (users[username] && users[username] === password) {
+  if (isAdmin || isRegularUser) {
     currentUser = username;
     loginError.textContent = '';
     showApp();
-    adminMenuWrapper.classList.add('hidden');
+    adminMenuWrapper.classList.toggle('hidden', !isAdmin);
     if (!loaded) loadWorkbook();
     return;
   }
