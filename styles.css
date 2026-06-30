@@ -118,3 +118,94 @@ th { background: #f7f9fc; color: var(--muted); font-size: 0.9rem; }
   .topbar, .workspace { padding-left: 16px; padding-right: 16px; }
   .summary-grid { grid-template-columns: 1fr; }
 }
+
+.hidden {
+  display: none !important;
+}
+
+.login-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px;
+  background: linear-gradient(135deg, #164e9f 0%, #0e3b87 100%);
+  color: white;
+}
+
+.login-panel {
+  width: min(620px, 100%);
+  background: white;
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.16);
+  color: #132033;
+}
+
+.login-logo {
+  width: 84px;
+  height: 84px;
+  border-radius: 18px;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.login-copy .eyebrow {
+  color: #164e9f;
+}
+
+.login-panel h1 {
+  margin: 0 0 10px;
+  font-size: 2rem;
+}
+
+.login-panel .subtitle {
+  margin: 0 0 24px;
+  color: #526c8a;
+}
+
+.login-form {
+  display: grid;
+  gap: 16px;
+}
+
+.login-form label {
+  display: grid;
+  gap: 8px;
+  color: #0f2446;
+  font-size: 0.95rem;
+}
+
+.login-form input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid #d8e0ea;
+  border-radius: 12px;
+  font: inherit;
+}
+
+.login-form button {
+  min-height: 50px;
+  background: #164e9f;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.login-form .hint {
+  margin: 0;
+  color: #637083;
+}
+
+.login-form .error {
+  margin: 0;
+  color: #c3262e;
+  min-height: 1.2em;
+}
+
+.app-shell {
+  min-height: 100vh;
+  background: #eef3f8;
+}
