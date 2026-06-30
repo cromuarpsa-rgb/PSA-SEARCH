@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+users.json
+logs/
+node-write-test.tmp
