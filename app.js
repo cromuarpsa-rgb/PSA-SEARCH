@@ -7,9 +7,17 @@ const fileName = document.getElementById('fileName');
 const resultCount = document.getElementById('resultCount');
 const totalCount = document.getElementById('totalCount');
 const sheetPills = document.getElementById('sheetPills');
+const loginForm = document.getElementById('loginForm');
+const loginError = document.getElementById('loginError');
+const loginScreen = document.getElementById('loginScreen');
+const appShell = document.getElementById('appShell');
 
 let workbook = null;
 let activeSheet = 'all';
+let loaded = false;
+
+const AUTH_USERNAME = 'admin';
+const AUTH_PASSWORD = 'admin123';
 
 function escapeHtml(value) {
   return String(value ?? '')
@@ -18,6 +26,17 @@ function escapeHtml(value) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+}
+
+function showApp() {
+  loginScreen.classList.add('hidden');
+  appShell.classList.remove('hidden');
+}
+
+function showLogin(message = '') {
+  loginScreen.classList.remove('hidden');
+  appShell.classList.add('hidden');
+  loginError.textContent = message;
 }
 
 function renderSheets() {
@@ -71,17 +90,20 @@ function renderResults() {
   const thead = table.querySelector('thead');
   const tbody = table.querySelector('tbody');
 
-  if (activeSheet === 'all') {
-    columns.unshift('Sheet');
+  const columnsToRender = [...columns];
+  if (activeSheet === 'all' && !columnsToRender.includes('Sheet')) {
+    columnsToRender.unshift('Sheet');
   }
 
-  thead.innerHTML = columns.length ? `<tr>${columns.map((column) => `<th>${escapeHtml(column)}</th>`).join('')}</tr>` : '';
+  thead.innerHTML = columnsToRender.length ? `<tr>${columnsToRender.map((column) => `<th>${escapeHtml(column)}</th>`).join('')}</tr>` : '';
 
   if (!rows.length) {
-    tbody.innerHTML = `<tr><td class="empty" colspan="${Math.max(columns.length, 1)}">No matching records found.</td></tr>`;
+    tbody.innerHTML = `<tr><td class="empty" colspan="${Math.max(columnsToRender.length, 1)}">No matching records found.</td></tr>`;
   } else {
     tbody.innerHTML = rows.slice(0, 250).map((row) => {
-      const values = activeSheet === 'all' ? [row.sheet, ...columns.filter((column) => column !== 'Sheet').map((column) => row[column] || '')] : columns.map((column) => row[column] || '');
+      const values = activeSheet === 'all'
+        ? [row.sheet, ...columns.filter((column) => column !== 'Sheet').map((column) => row[column] || '')]
+        : columns.map((column) => row[column] || '');
       return `<tr>${values.map((value) => `<td>${escapeHtml(value)}</td>`).join('')}</tr>`;
     }).join('');
   }
@@ -92,14 +114,36 @@ function renderResults() {
 
 async function loadWorkbook() {
   statusText.textContent = 'Loading workbook…';
-  const response = await fetch('data/psa-data.json');
-  if (!response.ok) throw new Error('Unable to load workbook data.');
-  workbook = await response.json();
-  fileName.textContent = workbook.file;
-  statusText.textContent = `Loaded ${workbook.sheets.length} sheet(s)`;
-  renderSheets();
-  renderResults();
+  try {
+    const response = await fetch('data/psa-data.json');
+    if (!response.ok) throw new Error('Unable to load workbook data.');
+    workbook = await response.json();
+    fileName.textContent = workbook.file;
+    statusText.textContent = `Loaded ${workbook.sheets.length} sheet(s)`;
+    renderSheets();
+    renderResults();
+    loaded = true;
+  } catch (error) {
+    statusText.textContent = error.message;
+    fileName.textContent = 'Workbook unavailable';
+    resultCount.textContent = '0';
+    totalCount.textContent = '0';
+    table.querySelector('tbody').innerHTML = `<tr><td class="empty">${escapeHtml(error.message)}</td></tr>`;
+  }
 }
+
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  if (username === AUTH_USERNAME && password === AUTH_PASSWORD) {
+    loginError.textContent = '';
+    showApp();
+    if (!loaded) loadWorkbook();
+  } else {
+    showLogin('Invalid username or password.');
+  }
+});
 
 searchInput.addEventListener('input', renderResults);
 sheetSelect.addEventListener('change', (event) => {
@@ -115,10 +159,4 @@ clearButton.addEventListener('click', () => {
   renderResults();
 });
 
-loadWorkbook().catch((error) => {
-  statusText.textContent = error.message;
-  fileName.textContent = 'Workbook unavailable';
-  resultCount.textContent = '0';
-  totalCount.textContent = '0';
-  table.querySelector('tbody').innerHTML = `<tr><td class="empty">${escapeHtml(error.message)}</td></tr>`;
-});
+showLogin();
