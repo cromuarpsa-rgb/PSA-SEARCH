@@ -43,9 +43,9 @@
         </div>
         <div class="topbar-actions">
           <div class="admin-menu-wrapper hidden" id="adminMenuWrapper">
-            <button id="adminMenuButton" class="secondary" type="button" aria-expanded="false" aria-haspopup="true">Admin menu</button>
+            <button id="adminMenuButton" class="secondary admin-menu-button" type="button" aria-expanded="false" aria-haspopup="true">Admin menu ▾</button>
             <div class="admin-menu hidden" id="adminMenu">
-              <button id="adminAddUser" type="button">Add user</button>
+              <button id="adminAddUser" type="button">Create user</button>
             </div>
           </div>
           <div class="status-pill" id="statusText">Loading workbook…</div>
@@ -95,9 +95,12 @@
 
     <div id="userModal" class="modal hidden">
       <div class="modal-backdrop" id="modalBackdrop"></div>
-      <div class="modal-card">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="userModalTitle">
         <div class="modal-header">
-          <h2>Create user</h2>
+          <div>
+            <h2 id="userModalTitle">Create a local user</h2>
+            <p class="modal-description">Add a browser-only account for search access without administrator credentials.</p>
+          </div>
           <button id="closeUserModal" class="close-button" type="button" aria-label="Close">×</button>
         </div>
         <form id="userForm" class="user-form" autocomplete="off">
@@ -113,7 +116,7 @@
             <button type="submit">Create user</button>
             <button id="cancelUserModal" type="button" class="secondary">Cancel</button>
           </div>
-          <p class="hint admin-hint">Users are stored locally in this browser only.</p>
+          <p class="hint admin-hint">Users are stored locally in this browser only; refresh or clear storage and the account will be removed.</p>
           <p class="error" id="userError"></p>
           <p class="success" id="userSuccess"></p>
         </form>
