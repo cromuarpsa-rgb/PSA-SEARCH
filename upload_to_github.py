@@ -1,5 +1,6 @@
 from pathlib import Path
 from urllib.error import HTTPError
+from urllib.parse import quote
 from urllib.request import Request, urlopen
 import base64
 import json
@@ -52,7 +53,8 @@ def api_request(method, url, token, payload=None):
 
 
 def remote_sha(path, token):
-    url = f"https://api.github.com/repos/{OWNER}/{REPO}/contents/{path}?ref={BRANCH}"
+    encoded_path = quote(path, safe='/')
+    url = f"https://api.github.com/repos/{OWNER}/{REPO}/contents/{encoded_path}?ref={BRANCH}"
     status, body = api_request("GET", url, token)
     if status == 200:
         return body.get("sha")
@@ -75,7 +77,8 @@ def upload_file(path, token):
     }
     if sha:
         payload["sha"] = sha
-    url = f"https://api.github.com/repos/{OWNER}/{REPO}/contents/{path}"
+    encoded_path = quote(path, safe='/')
+    url = f"https://api.github.com/repos/{OWNER}/{REPO}/contents/{encoded_path}"
     status, body = api_request("PUT", url, token, payload)
     if status not in (200, 201):
         raise RuntimeError(f"Upload failed for {path}: {body.get('message', body)}")
