@@ -248,7 +248,7 @@ def page_login(message=""):
     logo = "/logo" if logo_file() else ""
     logo_html = f'<img src="{logo}" alt="PSA logo" class="login-logo">' if logo else ""
     error = f'<p class="error">{html.escape(message)}</p>' if message else ""
-    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PSA Search Login</title><style>{CSS}</style></head><body class="login-body"><main class="login-shell"><section class="login-brand">{logo_html}<p class="eyebrow">Philippine Statistics Authority</p><h1>PSA Search System</h1><p class="intro">Secure local access for searching the PSOC and PSIC workbook records.</p></section><form class="login-panel" method="post" action="/login"><h2>Sign in</h2><label>Username<input name="username" autocomplete="username" required autofocus></label><label>Password<input name="password" type="password" autocomplete="current-password" required></label>{error}<button type="submit">Log in</button><p class="hint">Default account: admin / admin123</p></form></main></body></html>'''
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PSA Search Login</title><style>{CSS}</style></head><body class="login-body"><main class="login-shell"><section class="login-brand">{logo_html}<p class="eyebrow">Philippine Statistics Authority</p><h1>PSA Search System</h1><p class="intro">Secure local access for searching the PSOC and PSIC workbook records.</p></section><form class="login-panel" method="post" action="/login"><h2>Sign in</h2><label>Username<input name="username" autocomplete="username" required autofocus></label><label>Password<input name="password" type="password" autocomplete="current-password" required></label>{error}<button type="submit">Log in</button></form></main></body></html>'''
 
 
 def page_app(username):
@@ -380,7 +380,7 @@ class AppHandler(BaseHTTPRequestHandler):
 def main():
     ensure_files()
     print(f"PSA Search System is running at http://{HOST}:{PORT}")
-    print("Default login: admin / admin123")
+    print("Default admin account is configured locally.")
     server = ThreadingHTTPServer((HOST, PORT), AppHandler)
     try:
         server.serve_forever()
