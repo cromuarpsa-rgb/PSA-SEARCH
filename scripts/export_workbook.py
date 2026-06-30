@@ -31,6 +31,27 @@ def read_shared_strings(book):
     return ["".join(item.itertext()) for item in root_xml.findall("m:si", NS)]
 
 
+from pathlib import PurePosixPath
+
+def normalize_rel_target(target):
+    raw = target.lstrip("/")
+    parts = []
+    path = PurePosixPath(raw)
+    if not str(path).startswith("xl/"):
+        path = PurePosixPath("xl") / path
+    for part in path.parts:
+        if part == ".":
+            continue
+        if part == "..":
+            if parts and parts[-1] != "..":
+                parts.pop()
+            else:
+                parts.append(part)
+        else:
+            parts.append(part)
+    return PurePosixPath(*parts).as_posix()
+
+
 def read_sheet_targets(book):
     workbook = ET.fromstring(book.read("xl/workbook.xml"))
     rels = ET.fromstring(book.read("xl/_rels/workbook.xml.rels"))
@@ -39,8 +60,7 @@ def read_sheet_targets(book):
     rid_key = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id"
     for sheet in workbook.findall("m:sheets/m:sheet", NS):
         target = rel_map.get(sheet.attrib.get(rid_key), "")
-        if not target.startswith("xl/"):
-            target = "xl/" + target.lstrip("/")
+        target = normalize_rel_target(target)
         sheets.append((sheet.attrib["name"], target))
     return sheets
 
