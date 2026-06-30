@@ -7,6 +7,7 @@ import json
 import os
 import sys
 import mimetypes
+import http.client
 
 OWNER = "cromuarpsa-rgb"
 REPO = "PSA-SEARCH"
@@ -41,10 +42,21 @@ def api_request(method, url, token, payload=None):
     request = Request(url, data=data, method=method, headers=headers)
     try:
         with urlopen(request, timeout=60) as response:
-            raw = response.read().decode("utf-8")
-            return response.status, json.loads(raw) if raw else {}
+            try:
+                raw_bytes = response.read()
+            except http.client.IncompleteRead as incomplete:
+                raw_bytes = incomplete.partial or b""
+            raw = raw_bytes.decode("utf-8", errors="replace")
+            try:
+                return response.status, json.loads(raw) if raw else {}
+            except json.JSONDecodeError:
+                return response.status, {"message": raw}
     except HTTPError as error:
-        raw = error.read().decode("utf-8")
+        try:
+            raw_bytes = error.read()
+        except http.client.IncompleteRead as incomplete:
+            raw_bytes = incomplete.partial or b""
+        raw = raw_bytes.decode("utf-8", errors="replace")
         try:
             body = json.loads(raw)
         except json.JSONDecodeError:
