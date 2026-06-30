@@ -25,7 +25,7 @@
             <input id="password" name="password" type="password" autocomplete="current-password" required />
           </label>
           <button type="submit">Sign in</button>
-          <p class="hint">Use <strong>admin</strong> / <strong>admin123</strong></p>
+          <p class="hint">Enter your login credentials to continue.</p>
           <p class="error" id="loginError"></p>
         </form>
       </div>
@@ -43,6 +43,26 @@
         </div>
         <div class="status-pill" id="statusText">Loading workbook…</div>
       </header>
+      <section id="adminPanel" class="admin-panel hidden">
+        <div class="admin-header">
+          <h2>Admin: Add User</h2>
+          <p>Create additional account access for the local search app.</p>
+        </div>
+        <form id="userForm" class="user-form" autocomplete="off">
+          <label>
+            New username
+            <input id="newUsername" type="text" required />
+          </label>
+          <label>
+            New password
+            <input id="newPassword" type="password" required />
+          </label>
+          <button type="submit">Create user</button>
+          <p class="hint admin-hint">Users are stored locally in this browser only.</p>
+          <p class="error" id="userError"></p>
+          <p class="success" id="userSuccess"></p>
+        </form>
+      </section>
 
       <main class="workspace">
         <section class="toolbar">
