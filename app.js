@@ -11,7 +11,14 @@ const loginForm = document.getElementById('loginForm');
 const loginError = document.getElementById('loginError');
 const loginScreen = document.getElementById('loginScreen');
 const appShell = document.getElementById('appShell');
-const adminPanel = document.getElementById('adminPanel');
+const adminMenuWrapper = document.getElementById('adminMenuWrapper');
+const adminMenuButton = document.getElementById('adminMenuButton');
+const adminMenu = document.getElementById('adminMenu');
+const adminAddUser = document.getElementById('adminAddUser');
+const userModal = document.getElementById('userModal');
+const modalBackdrop = document.getElementById('modalBackdrop');
+const closeUserModal = document.getElementById('closeUserModal');
+const cancelUserModal = document.getElementById('cancelUserModal');
 const userForm = document.getElementById('userForm');
 const newUsername = document.getElementById('newUsername');
 const newPassword = document.getElementById('newPassword');
@@ -45,6 +52,18 @@ function showLogin(message = '') {
   loginScreen.classList.remove('hidden');
   appShell.classList.add('hidden');
   loginError.textContent = message;
+}
+
+function openUserModal() {
+  userModal.classList.remove('hidden');
+  userError.textContent = '';
+  userSuccess.textContent = '';
+  newUsername.value = '';
+  newPassword.value = '';
+}
+
+function closeUserModalDialog() {
+  userModal.classList.add('hidden');
 }
 
 function renderSheets() {
@@ -156,7 +175,7 @@ loginForm.addEventListener('submit', (event) => {
     currentUser = username;
     loginError.textContent = '';
     showApp();
-    adminPanel.classList.remove('hidden');
+    adminMenuWrapper.classList.remove('hidden');
     if (!loaded) loadWorkbook();
     return;
   }
@@ -165,7 +184,7 @@ loginForm.addEventListener('submit', (event) => {
     currentUser = username;
     loginError.textContent = '';
     showApp();
-    adminPanel.classList.add('hidden');
+    adminMenuWrapper.classList.add('hidden');
     if (!loaded) loadWorkbook();
     return;
   }
@@ -186,6 +205,22 @@ clearButton.addEventListener('click', () => {
   renderSheets();
   renderResults();
 });
+
+adminMenuButton.addEventListener('click', () => {
+  const expanded = adminMenuButton.getAttribute('aria-expanded') === 'true';
+  adminMenuButton.setAttribute('aria-expanded', String(!expanded));
+  adminMenu.classList.toggle('hidden');
+});
+
+adminAddUser.addEventListener('click', () => {
+  adminMenu.classList.add('hidden');
+  adminMenuButton.setAttribute('aria-expanded', 'false');
+  openUserModal();
+});
+
+closeUserModal.addEventListener('click', closeUserModalDialog);
+cancelUserModal.addEventListener('click', closeUserModalDialog);
+modalBackdrop.addEventListener('click', closeUserModalDialog);
 
 userForm.addEventListener('submit', (event) => {
   event.preventDefault();
