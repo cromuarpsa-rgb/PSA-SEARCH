@@ -101,8 +101,8 @@ def main():
     token = get_token()
     if not token:
         raise SystemExit("No token provided.")
-    if token in {"admin123", "admin", "password", "123456"}:
-        raise SystemExit("Invalid input. Use a real GitHub personal access token, not your app password or admin password.")
+    if token in {"password", "123456"}:
+        raise SystemExit("Invalid input. Use a real GitHub personal access token.")
     for path in FILES:
         upload_file(path, token)
     print("Done. Open the repository to verify the files.")
