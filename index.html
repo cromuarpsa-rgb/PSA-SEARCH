@@ -41,28 +41,16 @@
             <p class="subtitle">Search PSOC and PSIC workbook records instantly.</p>
           </div>
         </div>
-        <div class="status-pill" id="statusText">Loading workbook…</div>
-      </header>
-      <section id="adminPanel" class="admin-panel hidden">
-        <div class="admin-header">
-          <h2>Admin: Add User</h2>
-          <p>Create additional account access for the local search app.</p>
+        <div class="topbar-actions">
+          <div class="admin-menu-wrapper hidden" id="adminMenuWrapper">
+            <button id="adminMenuButton" class="secondary" type="button" aria-expanded="false" aria-haspopup="true">Admin menu</button>
+            <div class="admin-menu hidden" id="adminMenu">
+              <button id="adminAddUser" type="button">Add user</button>
+            </div>
+          </div>
+          <div class="status-pill" id="statusText">Loading workbook…</div>
         </div>
-        <form id="userForm" class="user-form" autocomplete="off">
-          <label>
-            New username
-            <input id="newUsername" type="text" required />
-          </label>
-          <label>
-            New password
-            <input id="newPassword" type="password" required />
-          </label>
-          <button type="submit">Create user</button>
-          <p class="hint admin-hint">Users are stored locally in this browser only.</p>
-          <p class="error" id="userError"></p>
-          <p class="success" id="userSuccess"></p>
-        </form>
-      </section>
+      </header>
 
       <main class="workspace">
         <section class="toolbar">
@@ -103,6 +91,33 @@
           </div>
         </section>
       </main>
+    </div>
+
+    <div id="userModal" class="modal hidden">
+      <div class="modal-backdrop" id="modalBackdrop"></div>
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>Create user</h2>
+          <button id="closeUserModal" class="close-button" type="button" aria-label="Close">×</button>
+        </div>
+        <form id="userForm" class="user-form" autocomplete="off">
+          <label>
+            New username
+            <input id="newUsername" type="text" required />
+          </label>
+          <label>
+            New password
+            <input id="newPassword" type="password" required />
+          </label>
+          <div class="modal-actions">
+            <button type="submit">Create user</button>
+            <button id="cancelUserModal" type="button" class="secondary">Cancel</button>
+          </div>
+          <p class="hint admin-hint">Users are stored locally in this browser only.</p>
+          <p class="error" id="userError"></p>
+          <p class="success" id="userSuccess"></p>
+        </form>
+      </div>
     </div>
 
     <script src="app.js"></script>
