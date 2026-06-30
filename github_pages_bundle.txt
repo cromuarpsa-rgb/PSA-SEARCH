@@ -1,0 +1,20 @@
+Upload these files/folders to the repository root of PSA-SEARCH:
+
+- index.html
+- styles.css
+- app.js
+- logo/PSA-logo-1536x1536.webp
+- data/psa-data.json
+
+If data/psa-data.json is missing, generate it by running:
+py scripts/export_workbook.py
+
+Then enable GitHub Pages:
+1. Open repository Settings -> Pages
+2. Source: Deploy from a branch
+3. Branch: main
+4. Folder: / (root)
+5. Save
+
+After a few minutes, visit:
+https://cromuarpsa-rgb.github.io/PSA-SEARCH/

@@ -1,0 +1,22 @@
+2026-06-30 14:08:18	login_success	admin	-
+2026-06-30 14:08:21	search	admin	sheet=all; query=; matches=4549
+2026-06-30 14:08:45	search	admin	sheet=sorted PSOC PSIC; query=; matches=4549
+2026-06-30 14:08:53	search	admin	sheet=sorted PSOC PSIC; query=natio; matches=29
+2026-06-30 14:08:54	search	admin	sheet=sorted PSOC PSIC; query=national; matches=29
+2026-06-30 14:09:04	search	admin	sheet=sorted PSOC PSIC_UPDATED; query=national; matches=29
+2026-06-30 14:09:09	search	admin	sheet=HGC; query=national; matches=0
+2026-06-30 14:09:16	search	admin	sheet=HGC; query=; matches=315
+2026-06-30 14:09:18	search	admin	sheet=HGC; query=a; matches=309
+2026-06-30 14:09:18	search	admin	sheet=HGC; query=ac; matches=19
+2026-06-30 14:09:20	search	admin	sheet=HGC; query=a; matches=309
+2026-06-30 14:09:20	search	admin	sheet=HGC; query=; matches=315
+2026-06-30 14:09:27	search	admin	sheet=sorted PSOC PSIC; query=; matches=4549
+2026-06-30 14:09:34	search	admin	sheet=sorted PSOC PSIC; query=a; matches=4222
+2026-06-30 14:09:34	search	admin	sheet=sorted PSOC PSIC; query=acc; matches=99
+2026-06-30 14:09:35	search	admin	sheet=sorted PSOC PSIC; query=acco; matches=87
+2026-06-30 14:09:35	search	admin	sheet=sorted PSOC PSIC; query=accou; matches=77
+2026-06-30 14:09:35	search	admin	sheet=sorted PSOC PSIC; query=accoun; matches=77
+2026-06-30 14:09:36	search	admin	sheet=sorted PSOC PSIC; query=account; matches=77
+2026-06-30 15:08:02	search	admin	sheet=sorted PSOC PSIC; query=accoun; matches=77
+2026-06-30 15:08:02	search	admin	sheet=sorted PSOC PSIC; query=; matches=4549
+2026-06-30 15:08:03	search	admin	sheet=sorted PSOC PSIC; query=ACCOUNTING ASSOC; matches=7

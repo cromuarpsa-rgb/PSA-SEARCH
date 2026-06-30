@@ -3,21 +3,30 @@ from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 import base64
 import json
+import os
+import sys
 import mimetypes
 
 OWNER = "cromuarpsa-rgb"
 REPO = "PSA-SEARCH"
 BRANCH = "main"
 ROOT = Path(__file__).resolve().parent
-FILES = [
-    "app.py",
-    "run.bat",
-    "README.md",
-    "README.txt",
-    ".gitignore",
-    "data/032026_Sorted PSOC PSIC.xlsx",
-    "logo/PSA-logo-1536x1536.webp",
-]
+IGNORED_DIRS = {".git", "__pycache__", ".venv", "venv", "node_modules"}
+
+
+def collect_files():
+    files = []
+    for path in sorted(ROOT.rglob("*")):
+        if not path.is_file():
+            continue
+        rel_path = path.relative_to(ROOT)
+        if any(part in IGNORED_DIRS for part in rel_path.parts[:-1]):
+            continue
+        files.append(rel_path.as_posix())
+    return files
+
+
+FILES = collect_files()
 
 
 def api_request(method, url, token, payload=None):
@@ -74,11 +83,23 @@ def upload_file(path, token):
     print(f"{action}: {path}")
 
 
+def get_token():
+    for key in ("GITHUB_TOKEN", "GH_TOKEN", "GIT_TOKEN"):
+        value = os.getenv(key)
+        if value:
+            return value
+    if len(sys.argv) > 1:
+        return sys.argv[1]
+    return input("Paste GitHub token with repository Contents read/write access: ").strip()
+
+
 def main():
     print(f"Uploading PSA Search System to https://github.com/{OWNER}/{REPO}")
-    token = input("Paste GitHub token with repository Contents read/write access: ").strip()
+    token = get_token()
     if not token:
         raise SystemExit("No token provided.")
+    if token in {"admin123", "admin", "password", "123456"}:
+        raise SystemExit("Invalid input. Use a real GitHub personal access token, not your app password or admin password.")
     for path in FILES:
         upload_file(path, token)
     print("Done. Open the repository to verify the files.")
