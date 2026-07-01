@@ -1,0 +1,2 @@
+openpyxl==3.10.0
+requests==2.31.0
